@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Send to Aido</title>
+    <link
+    rel="stylesheet"
+    href="https://cdn.rawgit.com/daneden/animate.css/v3.1.0/animate.min.css"
+    />
+    <script src="https://cdn.rawgit.com/matthieua/WOW/1.0.1/dist/wow.min.js"></script>
+    <style type="text/css">
+        body {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            /* align-items: center; */
+            font-family: 'Open Sans', sans-serif;
+            height: 100vh;
+            background-image: url("https://scontent.fhan17-1.fna.fbcdn.net/v/t39.30808-6/316835879_209670498124953_6507327533147172760_n.jpg?stp=cp6_dst-jpg_s960x960&_nc_cat=103&ccb=1-7&_nc_sid=e3f864&_nc_ohc=_AVd7_MJpfMAX_sYwlg&_nc_ht=scontent.fhan17-1.fna&oh=00_AfA7qnDDp_UL_YfHVDPEZKZxIV8g2YAkaFdwMR9vLc0Hgw&oe=63B4F8CC");
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .troller {
+            cursor: pointer;
+            margin-top: 20vh;
+        }
+
+        .question {
+            width: 600px;
+            height: 200px;
+            display: block;
+            background: radial-gradient(#3F4E5A, #011627);
+            font-size: 25px;
+            color: white;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 20px 0 20px;
+        }
+
+        .answers {
+            /* width: 600px; */
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .answer {
+            margin: 40px 10px 10px 10px;
+            width: 200px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 25px;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .answer.yes {
+            background-color: #16985A;
+        }
+
+        .answer.no {
+            background-color: #E35347;
+        }
+
+        span {
+            text-align: center;
+        }
+        .snow-container{position:fixed;width:100%;max-width:100%;z-index:99999;pointer-events:none;overflow:hidden;top:0;height:100%}
+.snow{display:block;position:absolute;z-index:2;top:0;right:0;bottom:0;left:0;pointer-events:none;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0);-webkit-animation:snow linear infinite;animation:snow linear infinite}
+.snow.foreground{background-image:url("https://dl6rt3mwcjzxg.cloudfront.net/assets/snow/snow-large-075d267ecbc42e3564c8ed43516dd557.png");-webkit-animation-duration:15s;animation-duration:10s}
+.snow.foreground.layered{-webkit-animation-delay:7.5s;animation-delay:7.5s}
+.snow.middleground{background-image:url(https://dl6rt3mwcjzxg.cloudfront.net/assets/snow/snow-medium-0b8a5e0732315b68e1f54185be7a1ad9.png);-webkit-animation-duration:20s;animation-duration:15s}
+.snow.middleground.layered{-webkit-animation-delay:10s;animation-delay:10s}
+.snow.background{background-image:url(https://dl6rt3mwcjzxg.cloudfront.net/assets/snow/snow-small-1ecd03b1fce08c24e064ff8c0a72c519.png);-webkit-animation-duration:25s;animation-duration:20s}
+.snow.background.layered{-webkit-animation-delay:12.5s;animation-delay:12.5s}
+@-webkit-keyframes snow{0%{-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}100%{-webkit-transform:translate3d(5%,100%,0);transform:translate3d(5%,100%,0)}}
+@keyframes snow{0%{-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}100%{-webkit-transform:translate3d(5%,100%,0);transform:translate3d(5%,100%,0)}}
+    </style>
+</head>
+
+<body>
+    <div class='snow-container'>
+        <div class='snow foreground'></div>
+        <div class='snow foreground layered'></div>
+        <div class='snow middleground'></div>
+        <div class='snow middleground layered'></div>
+        <div class='snow background'></div>
+        <div class='snow background layered'></div>
+    </div>
+    <div class="troller">
+        <div class="question">
+            <span>Hello Lịch, mình có mấy câu hâm hâm xàm xàm muốn nói với bạn, click vào đây nhé!</span> 
+        </div> 
+    </div>
+
+    <script>
+        let count = 0;
+        let clickNumber = 0;
+        function troll(answer) {
+            let answers = document.getElementsByClassName('answer');
+            if (count >= 5) {
+                for (let answer of answers) {
+                    answer.style.display = 'none';
+                }
+                alert('Đồng ý rồi đấy. Xuống dưới nhà đi péo. Đừng chọn nữa :))');
+            }
+            if (answer.innerText.toLowerCase() == 'không') {
+                for (let answer of answers) {
+                    if (answer.classList.contains('yes')) {
+                        answer.innerText = 'Không';
+                        answer.classList.add('no')
+                        answer.classList.remove('yes');
+                    } else if (answer.classList.contains('no')) {
+                        answer.innerText = 'Có';
+                        answer.classList.add('yes')
+                        answer.classList.remove('no');
+                    }
+                }
+                count++;
+            } else {
+                alert(`Mình biết mà <3, đồng ý thì mặc ấm rồi xuống dưới nhà thôi nào, có bất ngờ đóooooo =))`);
+            }
+        }
+        $(".troller").click(function(){
+            if(clickNumber > 18) {return}
+            if(clickNumber === 0) {
+                $(".question").hide()
+                setTimeout(() => {
+                    $(".troller").append(` 
+                    <div class="question">
+                        <span>Bạn cứ click lần lượt để đọc nhá ^^</span> 
+                    </div> 
+                   `)  
+                },2000)
+            }
+            if(clickNumber === 1) {
+                $(".question").hide()
+                setTimeout(() => {
+                    $(".troller").append(` 
+                    <div class="question">
+                        <span>Mình với bạn biết nhau cũng tình cờ nhỉ!</span> 
+                    </div> 
+                   `)  
+                },2000)
+            }
+            if(clickNumber === 2) {
+                $(".question").hide()
+                setTimeout(() => {
+                    $(".troller").append(` 
+                    <div class="question">
+                        <span>Ban đầu mình cũng chỉ nghĩ là nói chuyện xã giao vậy thôi</span> 
+                    </div> 
+                   `)  
+                },2000)
+            }
+            if(clickNumber === 3) {
+                $(".question").hide()
+                setTimeout(() => {
+                    $(".troller").append(` 
+                    <div class="question">
+                        <span>Nhưng mà dần dần lại thành quen</span> 
+                    </div> 
+                   `)  
+                },2000)
+            }
+            if(clickNumber === 4) {
+                $(".question").hide()
+                setTimeout(() => {
+                    $(".troller").append(` 
+                    <div class="question">
+                        <span>Rồi đi chơi nè</span> 
+                    </div> 
+                   `)  
+                },2000)
+            }
+            if(clickNumber === 5) {
+                $(".question").hide()
+                setTimeout(() => {
+                    $(".troller").append(` 
+                    <div class="question">
+                        <span>Nghe bạn tâm sự nhiều hơn, hiểu bạn nhiều hơn</span> 
+                    </div> 
+                   `)  
+                },2000)
+            }
+            if(clickNumber === 6) {
+                $(".question").hide()
+                setTimeout(() => {
+                    $(".troller").append(` 
+                    <div class="question">
+                        <span>Rồi dần dần bạn nhảy vào trong đầu mình lúc nào cũng không biết nữa =))</span> 
+                    </div> 
+                   `)  
+                },2000)
+            }
+            if(clickNumber === 7) {
+                $(".question").hide()
+                setTimeout(() => {
+                    $(".troller").append(` 
+                    <div class="question">
+                        <span>Vài tháng quen nhau tuy chưa dài, nhưng mình thấy đã trải qua kha khá cảm xúc</span> 
+                    </div> 
+                   `)  
+                },2000)
+            }
+            if(clickNumber === 8) {
+                $(".question").hide()
+                setTimeout(() => {
+                    $(".troller").append(` 
+                    <div class="question">
+                        <span>Vui có, buồn có, nhớ có, lo lắng cũng có</span> 
+                    </div> 
+                   `)  
+                },2000)
+            }
+            if(clickNumber === 9) {
+                $(".question").hide()
+                setTimeout(() => {
+                    $(".troller").append(` 
+                    <div class="question">
+                        <span>Xấu tính cũng có luôn</span> 
+                        <span style='font-size:50px;'>&#128514;</span>
+                    </div> 
+                   `)  
+                },2000)
+            }
+            if(clickNumber === 10) {
+                $(".question").hide()
+                setTimeout(() => {
+                    $(".troller").append(` 
+                    <div class="question">
+                        <span>Nhưng biết làm sao được, vì những cảm xúc đó chỉ xuất phát đối với người mình quan tâm thôiii</span> 
+                    </div> 
+                   `)  
+                },2000)
+            }
+            if(clickNumber === 11) {
+                $(".question").hide()
+                setTimeout(() => {
+                    $(".troller").append(` 
+                    <div class="question">
+                        <span>Lúc bạn péo đọc được những dòng này thì chắc là cũng sắp sang năm mới rồi</span> 
+                    </div> 
+                   `)  
+                },2000)
+            }
+            if(clickNumber === 12) {
+                $(".question").hide()
+                setTimeout(() => {
+                    $(".troller").append(` 
+                    <div class="question">
+                        <span>Bạn có hỏi mình là năm cũ còn gì chưa thực hiện được không</span> 
+                    </div> 
+                   `)  
+                },2000)
+            }
+            if(clickNumber === 13) {
+                $(".question").hide()
+                setTimeout(() => {
+                    $(".troller").append(` 
+                    <div class="question">
+                        <span>Mình vẫn còn vài điều chưa làm bạn ạ!</span> 
+                    </div> 
+                   `)  
+                },2000)
+            }
+            if(clickNumber === 14) {
+                $(".question").hide()
+                setTimeout(() => {
+                    $(".troller").append(` 
+                    <div class="question">
+                        <span>Nhưng chỉ còn vài giờ nữa, chắc khum kịp giảm cân với OT xong dự án rồi =))</span> 
+                    </div> 
+                   `)  
+                },2000)
+            }
+            if(clickNumber === 15) {
+                $(".question").hide()
+                setTimeout(() => {
+                    $(".troller").append(` 
+                    <div class="question">
+                        <span>Chỉ còn một việc là có khả năng thôi bạn ạ!</span> 
+                    </div> 
+                   `)  
+                },2000)
+            }
+            if(clickNumber === 16) {
+                $(".question").hide()
+                setTimeout(() => {
+                    $(".troller").append(` 
+                    <div class="question">
+                        <span>Nhưng mà việc này mình không thể làm một mình được á!!!</span> 
+                    </div> 
+                   `)  
+                },2000)
+            }
+            if(clickNumber === 17) {
+                $(".question").hide()
+                setTimeout(() => {
+                    $(".troller").append(` 
+                    <div class="question">
+                        <span>Mà mình cần có một người đồng hành nữa!!!</span> 
+                    </div> 
+                   `)  
+                },2000)
+            }
+            if(clickNumber === 18) {
+                $(".question").hide()
+                setTimeout(() => {
+                    $(".troller").append(` 
+                    <div class="question">
+                        <span>Bạn péo có muốn cùng mình thực hiện mong muốn chưa thực hiện được của năm cũ không :"></span> 
+                    </div> 
+                    `)  
+                },2000)
+                setTimeout(() => {
+                    $(".troller").append(` 
+                    <div class="answers">
+                        <div class="answer yes" onclick="troll(this)" onmouseover="troll(this)">Có</div>
+                        <div class="answer no" onclick="troll(this)" onmouseover="troll(this)">Không</div>
+                    </div>
+                    `)  
+                },3000)
+            }
+        clickNumber++;
+        });
+    </script>
+</body>
+
+</html>
